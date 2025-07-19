@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments/resources :: headResources}"></div>
+  </head>
+  <body>
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg bg-light py-0">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/pizzas}">Pizze</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div th:replace="~{fragments/resources :: scriptsResources}"></div>
+  </body>
+</html>
