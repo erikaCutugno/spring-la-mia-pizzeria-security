@@ -22,7 +22,15 @@
           <button type="submit" class="btn btn-primary">Cerca</button>
         </form>
       </div>
-      <h1 class="my-4">Lista Pizze</h1>
+      <div class="d-flex align-items-center justify-content-between">
+        <h1 class="my-4">Lista Pizze</h1>
+        <button
+          th:onclick="'location.href=\'/pizzas/create\''"
+          class="btn btn-success"
+        >
+          Crea una nuova Pizza
+        </button>
+      </div>
       <section class="row">
         <div class="col-12">
           <table th:if="${pizzas.size() > 0}" class="table">
