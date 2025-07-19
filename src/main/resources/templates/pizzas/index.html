@@ -7,6 +7,21 @@
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <main class="container">
+      <div>
+        <form
+          th:action="@{/pizzas/search}"
+          method="get"
+          class="d-flex align-items-center my-4"
+        >
+          <input
+            type="text"
+            name="query"
+            class="form-control w-25 me-2"
+            placeholder="Cerca per nome o ingredienti"
+          />
+          <button type="submit" class="btn btn-primary">Cerca</button>
+        </form>
+      </div>
       <h1 class="my-4">Lista Pizze</h1>
       <section class="row">
         <div class="col-12">
@@ -17,14 +32,26 @@
                 <th>Nome</th>
                 <th>Descrizione</th>
                 <th>Prezzo</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="pizza : ${pizzas}" th:object="${pizza}">
+              <tr
+                th:each="pizza : ${pizzas}"
+                th:object="${pizza}"
+                class="align-middle"
+              >
                 <td th:text="*{id}"></td>
                 <td th:text="*{name}" class="text-capitalize"></td>
                 <td th:text="*{description}"></td>
                 <td th:text="*{price} + ' €'"></td>
+                <td>
+                  <a
+                    th:href="@{/pizzas/{id}(id=${pizza.id})}"
+                    class="btn btn-primary btn-sm"
+                    >Dettagli</a
+                  >
+                </td>
               </tr>
             </tbody>
           </table>

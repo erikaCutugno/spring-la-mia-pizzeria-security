@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments/resources :: headResources}"></div>
+    <title>La Mia Pizzeria - Lista Pizze</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <main class="container">
+        <a th:href="@{/pizzas}" class="btn btn-primary btn-sm">Torna alla lista</a>
+      <h1 class="my-4" th:text="${pizza.name}"></h1>
+        <section class="row">
+            <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-body text-center" th:object="${pizza}">
+               <div class="w-50 h-50 mx-auto mb-3">
+                   <img th:src="@{*{url}}" class="card-img-top" th:alt="*{name} + ' Image'" />
+               </div>
+                <p class="card-text"><strong>Descrizione:</strong> <span th:text="*{description}"></span></p>
+                <p class="card-text"><strong>Prezzo:</strong> <span th:text="*{price} + ' €'"></span></p>
+                </div>
+            </div>
+            </div>
+    </main>
+    <div th:replace="~{fragments/resources :: scriptsResources}"></div>
+  </body>
+</html>
