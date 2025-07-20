@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <div th:replace="~{fragments/resources :: headResources}"></div>
-    <title>La Mia Pizzeria - Crea Pizza</title>
+    <title>La Mia Pizzeria - Modifica Pizza</title>
   </head>
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <main class="container">
-      <h1 class="my-4">Crea una Nuova Pizza</h1>
+      <h1 class="my-4">Modifica la Pizza</h1>
       <section class="row">
         <div class="col-12">
           <form
             id="pizza-form"
-            th:action="@{/pizzas/create}"
+            th:action="@{/pizzas/edit/{id}(id=${pizza.id})}"
             th:object="${pizza}"
             method="post"
           >
@@ -106,7 +106,7 @@
             <div class="mb-3 d-flex justify-content-between">
               <input
                 type="submit"
-                value="Crea Pizza"
+                value=" Modifica Pizza"
                 class="btn btn-primary me-2"
               />
               <input type="reset" value="Annulla" class="btn btn-secondary" />

@@ -19,6 +19,8 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+
+
 @Controller
 @RequestMapping("/pizzas")
 public class PizzaController {
@@ -64,6 +66,28 @@ public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResu
  
 }
 
+@GetMapping("/edit/{id}")
+public String edit(@PathVariable("id") Integer id, Model model) {
+
+model.addAttribute("pizza", repository.findById(id).get());
+    return "pizzas/edit";
+
+}
+@PostMapping("/edit/{id}")
+public String update(@Valid @ModelAttribute("pizza") Pizza formPizza, Model model, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+        return "pizzas/edit";
+    }
+    model.addAttribute("pizza", formPizza);
+    
+   
+    repository.save(formPizza);
+    return "redirect:/pizzas"; 
 }
 
- 
+@PostMapping("/delete/{id}")
+public String delete(@PathVariable("id") Integer id) {
+    repository.deleteById(id);
+    return "redirect:/pizzas"; 
+}
+} 

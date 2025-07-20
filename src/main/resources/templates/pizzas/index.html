@@ -41,6 +41,8 @@
                 <th>Descrizione</th>
                 <th>Prezzo</th>
                 <th></th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -59,6 +61,69 @@
                     class="btn btn-primary btn-sm"
                     >Dettagli</a
                   >
+                </td>
+                <td>
+                  <a
+                    th:href="@{/pizzas/edit/{id}(id=${pizza.id})}"
+                    class="btn btn-warning btn-sm"
+                    >Modifica</a
+                  >
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    data-bs-toggle="modal"
+                    th:data-bs-target="'#deleteModal' + ${pizza.id}"
+                  >
+                    Elimina
+                  </button>
+                  <!-- Modale Bootstrap -->
+                  <div
+                    class="modal fade"
+                    th:id="'deleteModal' + ${pizza.id}"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel">
+                            Conferma Eliminazione
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          Sei sicuro di voler eliminare la pizza
+                          <strong th:text="${pizza.name}"></strong>?
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Chiudi
+                          </button>
+                          <form
+                            th:action="@{/pizzas/delete/{id}(id=${pizza.id})}"
+                            method="post"
+                          >
+                            <button type="submit" class="btn btn-danger">
+                              Elimina
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </td>
               </tr>
             </tbody>
