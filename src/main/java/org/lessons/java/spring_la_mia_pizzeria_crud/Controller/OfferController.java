@@ -26,6 +26,12 @@ public class OfferController {
     private OfferRepository repository;
     @PostMapping("/create")
    public String store(@Valid @ModelAttribute("offer") Offer formOffer, BindingResult bindingResult, Model model) {
+        if (formOffer.getStartDate() != null && formOffer.getEndDate() != null) {
+        if (!formOffer.getEndDate().isAfter(formOffer.getStartDate())) {
+            bindingResult.rejectValue("endDate", "invalid.endDate", "La data di fine deve essere successiva alla data di inizio");
+        }
+    }
+
     if (bindingResult.hasErrors()) {
 
         return "offers/create-or-edit";
@@ -47,6 +53,13 @@ public String edit(@PathVariable("id") Integer id, Model model) {
 }
 @PostMapping("/edit/{id}")
 public String update(@Valid @ModelAttribute("offer") Offer formOffer,  BindingResult bindingResult, Model model) {
+        if (formOffer.getStartDate() != null && formOffer.getEndDate() != null) {
+        if (!formOffer.getEndDate().isAfter(formOffer.getStartDate())) {
+            bindingResult.rejectValue("endDate", "invalid.endDate", "La data di fine deve essere successiva alla data di inizio");
+        }
+    }
+
+    
     if (bindingResult.hasErrors()) {
         return "offers/create-or-edit";
     }

@@ -41,15 +41,13 @@
         </div>
       </section>
       <section class="row">
-        <div class="col-12">
+        <div th:unless="${pizza.offers.size() > 0}" class="alert alert-warning">
+          Nessuna offerta disponibile per questa pizza.
+        </div>
+        <div class="col-12" th:if="${pizza.offers.size() > 0}">
           <h2 class="my-4">Offerte per questa Pizza</h2>
-          <div
-            th:unless="${pizza.offers.size() > 0}"
-            class="alert alert-warning"
-          >
-            Nessuna offerta disponibile per questa pizza.
-          </div>
-          <table th:if="${pizza.offers.size() > 0}" class="table">
+
+          <table class="table">
             <thead>
               <tr class="text-uppercase table-primary">
                 <th>Titolo</th>
