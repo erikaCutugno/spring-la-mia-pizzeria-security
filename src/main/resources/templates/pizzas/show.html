@@ -7,20 +7,74 @@
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <main class="container">
-        <a th:href="@{/pizzas}" class="btn btn-primary btn-sm">Torna alla lista</a>
-      <h1 class="my-4" th:text="${pizza.name}"></h1>
-        <section class="row">
-            <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-body text-center" th:object="${pizza}">
-               <div class="w-50 h-50 mx-auto mb-3">
-                   <img th:src="@{*{url}}" class="card-img-top" th:alt="*{name} + ' Image'" />
-               </div>
-                <p class="card-text"><strong>Descrizione:</strong> <span th:text="*{description}"></span></p>
-                <p class="card-text"><strong>Prezzo:</strong> <span th:text="*{price} + ' €'"></span></p>
-                </div>
+      <a th:href="@{/pizzas}" class="btn btn-primary btn-sm"
+        >Torna alla lista</a
+      >
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="my-4" th:text="${pizza.name}"></h1>
+        <a
+          th:href="@{/pizzas/{id}/offers(id=${pizza.id})}"
+          class="btn btn-primary"
+          >Crea una nuova Offerta</a
+        >
+      </div>
+      <section class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-body text-center" th:object="${pizza}">
+              <div class="w-50 h-50 mx-auto mb-3">
+                <img
+                  th:src="@{*{url}}"
+                  class="card-img-top"
+                  th:alt="*{name} + ' Image'"
+                />
+              </div>
+              <p class="card-text">
+                <strong>Descrizione:</strong>
+                <span th:text="*{description}"></span>
+              </p>
+              <p class="card-text">
+                <strong>Prezzo:</strong> <span th:text="*{price} + ' €'"></span>
+              </p>
             </div>
-            </div>
+          </div>
+        </div>
+      </section>
+      <section class="row">
+        <div class="col-12">
+          <h2 class="my-4">Offerte per questa Pizza</h2>
+          <div
+            th:unless="${pizza.offers.size() > 0}"
+            class="alert alert-warning"
+          >
+            Nessuna offerta disponibile per questa pizza.
+          </div>
+          <table th:if="${pizza.offers.size() > 0}" class="table">
+            <thead>
+              <tr class="text-uppercase table-primary">
+                <th>Titolo</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="offer : ${pizza.offers}">
+                <td th:text="${offer.title}"></td>
+                <td th:text="${offer.startDate}"></td>
+                <td th:text="${offer.endDate}"></td>
+                <td>
+                  <a
+                    th:href="@{/offers/edit/{id}(id=${offer.id})}"
+                    class="btn btn-sm btn-primary"
+                    >Modifica</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </main>
     <div th:replace="~{fragments/resources :: scriptsResources}"></div>
   </body>

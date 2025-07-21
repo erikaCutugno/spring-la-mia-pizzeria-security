@@ -2,7 +2,9 @@ package org.lessons.java.spring_la_mia_pizzeria_crud.Controller;
 
 import java.util.List;
 
+import org.lessons.java.spring_la_mia_pizzeria_crud.Model.Offer;
 import org.lessons.java.spring_la_mia_pizzeria_crud.Model.Pizza;
+
 import org.lessons.java.spring_la_mia_pizzeria_crud.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PizzaController {
     @Autowired
     private PizzaRepository repository;
+    
+
     @GetMapping()
     public String index(Model model) {
         // Logica per recuperare le pizze dal database e passarle al template
@@ -90,4 +94,15 @@ public String delete(@PathVariable("id") Integer id) {
     repository.deleteById(id);
     return "redirect:/pizzas"; 
 }
+
+@GetMapping("/{id}/offers")
+public String offer(@PathVariable("id") Integer id, Model model) {
+    Offer offer = new Offer();
+    offer.setPizza(repository.findById(id).get());
+    model.addAttribute("offer", offer);
+    return "offers/create-or-edit"; 
+}
+
+
+
 } 
