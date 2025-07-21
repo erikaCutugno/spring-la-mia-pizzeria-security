@@ -24,12 +24,13 @@ public class OfferController {
 
     @Autowired
     private OfferRepository repository;
+
     @PostMapping("/create")
-   public String store(@Valid @ModelAttribute("offer") Offer formOffer, BindingResult bindingResult, Model model) {
+    public String store(@Valid @ModelAttribute("offer") Offer formOffer, BindingResult bindingResult, Model model) {
         if (formOffer.getStartDate() != null && formOffer.getEndDate() != null) {
-        if (!formOffer.getEndDate().isAfter(formOffer.getStartDate())) {
-            bindingResult.rejectValue("endDate", "invalid.endDate", "La data di fine deve essere successiva alla data di inizio");
-        }
+            if (!formOffer.getEndDate().isAfter(formOffer.getStartDate())) {
+                bindingResult.rejectValue("endDate", "invalid.endDate", "La data di fine deve essere successiva alla data di inizio");
+            }
     }
 
     if (bindingResult.hasErrors()) {

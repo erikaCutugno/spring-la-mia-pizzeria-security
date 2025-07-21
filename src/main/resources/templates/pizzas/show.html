@@ -73,6 +73,39 @@
           </table>
         </div>
       </section>
+      <section class="row">
+        <div
+          th:unless="${pizza.ingredients.size() > 0}"
+          class="alert alert-warning"
+        >
+          Nessun ingrediente disponibile per questa pizza.
+        </div>
+        <div class="col-12" th:if="${pizza.ingredients.size() > 0}">
+          <h2 class="my-4">Ingredienti per questa Pizza</h2>
+
+          <table class="table">
+            <thead>
+              <tr class="text-uppercase table-primary">
+                <th>Nome</th>
+
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="ingredient : ${pizza.ingredients}">
+                <td th:text="${ingredient.name}"></td>
+                <td>
+                  <a
+                    th:href="@{/ingredients/edit/{id}(id=${ingredient.id})}"
+                    class="btn btn-sm btn-primary"
+                    >Modifica</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </main>
     <div th:replace="~{fragments/resources :: scriptsResources}"></div>
   </body>

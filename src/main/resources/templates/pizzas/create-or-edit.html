@@ -7,12 +7,17 @@
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <main class="container">
-      <h1 class="my-4">Crea una Nuova Pizza</h1>
+      <div th:if="${edit}">
+        <h1 class="my-4">Modifica Pizza</h1>
+      </div>
+      <div th:unless="${edit}">
+        <h1 class="my-4">Crea una Nuova Pizza</h1>
+      </div>
       <section class="row">
         <div class="col-12">
           <form
             id="pizza-form"
-            th:action="@{/pizzas/create}"
+            th:action="${edit} ? @{/pizzas/edit/{id}(id=${pizza.id})} : @{/pizzas/create}"
             th:object="${pizza}"
             method="post"
           >
@@ -36,6 +41,25 @@
                     th:text="${error}"
                   ></li>
                 </ul>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div
+                class="single-category form-check"
+                th:each="ingredient : ${ingredients}"
+              >
+                <input
+                  type="checkbox"
+                  id="ingredient-[[${ingredient.id}]]"
+                  th:value="${ingredient.id}"
+                  class="form-check-input"
+                  th:field="${pizza.ingredients}"
+                />
+                <label
+                  for="ingredient-[[${ingredient.id}]]"
+                  class="form-check-label"
+                  th:text="${ingredient.name}"
+                ></label>
               </div>
             </div>
             <div class="mb-3">
@@ -104,11 +128,7 @@
               </div>
             </div>
             <div class="mb-3 d-flex justify-content-between">
-              <input
-                type="submit"
-                value="Crea Pizza"
-                class="btn btn-primary me-2"
-              />
+              <input type="submit" value="Salva" class="btn btn-primary me-2" />
               <input type="reset" value="Annulla" class="btn btn-secondary" />
             </div>
           </form>

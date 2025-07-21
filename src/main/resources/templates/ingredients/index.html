@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments/resources :: headResources}"></div>
+    <title>La Mia Pizzeria - Lista Ingredienti</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <main class="container">
+      <div class="d-flex align-items-center justify-content-between">
+        <h1 class="my-4">Lista Ingredienti</h1>
+        <button
+          th:onclick="'location.href=\'/ingredients/create\''"
+          class="btn btn-success"
+        >
+          Crea un nuovo Ingrediente
+        </button>
+      </div>
+      <section class="row">
+        <div class="col-12">
+          <table th:if="${ingredients.size() > 0}" class="table">
+            <thead>
+              <tr class="text-uppercase table-primary">
+                <th>ID</th>
+                <th>Nome</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                th:each="ingredient : ${ingredients}"
+                th:object="${ingredient}"
+                class="align-middle"
+              >
+                <td th:text="*{id}"></td>
+                <td th:text="*{name}" class="text-capitalize"></td>
+                <td>
+                  <a
+                    th:href="@{/ingredients/{id}(id=${ingredient.id})}"
+                    class="btn btn-primary btn-sm"
+                    >Dettagli</a
+                  >
+                </td>
+                <td>
+                  <a
+                    th:href="@{/ingredients/edit/{id}(id=${ingredient.id})}"
+                    class="btn btn-warning btn-sm"
+                    >Modifica</a
+                  >
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    data-bs-toggle="modal"
+                    th:data-bs-target="'#deleteModal' + ${ingredient.id}"
+                  >
+                    Elimina
+                  </button>
+                  <!-- Modale Bootstrap -->
+                  <div
+                    class="modal fade"
+                    th:id="'deleteModal' + ${ingredient.id}"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel">
+                            Conferma Eliminazione
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          Sei sicuro di voler eliminare l'ingrediente
+                          <strong th:text="${ingredient.name}"></strong>?
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Chiudi
+                          </button>
+                          <form
+                            th:action="@{/ingredients/delete/{id}(id=${ingredient.id})}"
+                            method="post"
+                          >
+                            <button type="submit" class="btn btn-danger">
+                              Elimina
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p th:unless="${ingredients.size() > 0}">
+            Non ci sono ingredienti disponibili.
+          </p>
+        </div>
+      </section>
+    </main>
+    <div th:replace="~{fragments/resources :: scriptsResources}"></div>
+  </body>
+</html>

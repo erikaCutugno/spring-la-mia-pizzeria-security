@@ -5,6 +5,9 @@ import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
@@ -43,6 +46,18 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza")
     private List<Offer> offers;
 
+    @ManyToMany
+    @JoinTable(name = "ingredient_pizza",
+               joinColumns = @JoinColumn(name = "pizza_id"),
+               inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private List<Ingredient> ingredients;
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
     public List<Offer> getOffers() {
         return offers;
     }
