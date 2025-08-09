@@ -1,8 +1,7 @@
 package org.lessons.java.spring_la_mia_pizzeria_crud.Controller;
 
 import org.lessons.java.spring_la_mia_pizzeria_crud.Model.Offer;
-
-import org.lessons.java.spring_la_mia_pizzeria_crud.Repository.OfferRepository;
+import org.lessons.java.spring_la_mia_pizzeria_crud.Service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class OfferController {
 
     @Autowired
-    private OfferRepository repository;
+    private OfferService offerService;
 
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("offer") Offer formOffer, BindingResult bindingResult, Model model) {
@@ -39,14 +38,14 @@ public class OfferController {
     }
     model.addAttribute("offer", formOffer);
 
-    repository.save(formOffer);
+    offerService.create(formOffer);
     return "redirect:/pizzas/" + formOffer.getPizza().getId();
  
 }
 @GetMapping("/edit/{id}")
 public String edit(@PathVariable("id") Integer id, Model model) {
 
-    Offer offer = repository.findById(id).get();
+    Offer offer = offerService.getById(id);
     model.addAttribute("offer", offer);
     model.addAttribute("edit", true); 
     return "offers/create-or-edit";
@@ -67,7 +66,7 @@ public String update(@Valid @ModelAttribute("offer") Offer formOffer,  BindingRe
     
     model.addAttribute("offer", formOffer);
 
-    repository.save(formOffer);
-    return "redirect:/pizzas/" + formOffer.getPizza().getId(); 
+    offerService.update(formOffer);
+    return "redirect:/pizzas/" + formOffer.getPizza().getId();
 }
 }
