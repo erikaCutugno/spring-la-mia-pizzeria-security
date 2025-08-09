@@ -15,9 +15,24 @@
               <a class="nav-link" th:href="@{/pizzas}">Pizze</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" th:href="@{/ingredients}">Ingredienti</a>
+              <a
+                class="nav-link"
+                th:href="@{/ingredients}"
+                sec:authorize="hasAuthority('ADMIN')"
+                >Ingredienti</a
+              >
             </li>
           </ul>
+        </div>
+        <div
+          sec:authorize="isAuthenticated()"
+          class="d-flex align-items-center gap-3"
+        >
+          <span>Utente: <strong sec:authentication="name"></strong> </span>
+          <span>
+            Ruolo:<strong sec:authentication="principal.authorities"></strong
+          ></span>
+          <a class="btn btn-sm btn-outline-danger" href="/logout">Logout</a>
         </div>
       </div>
     </nav>

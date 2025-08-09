@@ -24,7 +24,9 @@
       </div>
       <div class="d-flex align-items-center justify-content-between">
         <h1 class="my-4">Lista Pizze</h1>
+        <h3 th:text="'Ciao ' + ${username} + '!'"></h3>
         <button
+          sec:authorize="hasAuthority('ADMIN')"
           th:onclick="'location.href=\'/pizzas/create\''"
           class="btn btn-success"
         >
@@ -41,8 +43,8 @@
                 <th>Descrizione</th>
                 <th>Prezzo</th>
                 <th></th>
-                <th></th>
-                <th></th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
               </tr>
             </thead>
             <tbody>
@@ -62,14 +64,14 @@
                     >Dettagli</a
                   >
                 </td>
-                <td>
+                <td sec:authorize="hasAuthority('ADMIN')">
                   <a
                     th:href="@{/pizzas/edit/{id}(id=${pizza.id})}"
                     class="btn btn-warning btn-sm"
                     >Modifica</a
                   >
                 </td>
-                <td>
+                <td sec:authorize="hasAuthority('ADMIN')">
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"
